@@ -1,4 +1,7 @@
-from flask import Blueprint, render_template, request, flash
+from flask import Blueprint, render_template, request, flash, redirect, url_for
+from .models import User
+from . import db
+from werkzeug.security import generate_password_hash, check_password_hash
 import datetime
 
 auth = Blueprint('auth', __name__)
@@ -37,6 +40,14 @@ def sign_up():
         elif datetime.datetime.now() < date_birth_obj:
             flash('Date of birth must be in the past!', category='error')
         else:
+            new_user = User(email=email,
+                            password=generate_password_hash(password1),
+                            first_name=first_name,
+                            last_name=last_name,
+                            date_birth=date_birth_obj)
+            db.session.add(new_user)
+            db.session.commit()
             flash('User account created successfully!', category='success')
+            return redirect(url_for('views.index'))
 
     return render_template('signup.html')
