@@ -19,7 +19,15 @@
     <input type="text" class="form-control" id="summary" name="summary"/>
     <label for="data">Enter meeting info</label>
     <textarea name="data" id="data" class="form-control"></textarea>
+    <label for="when">When will the meeting occur?</label>
+    <input type="datetime-local" class="form-control" id="when" name="when"/>
+    <label for="who">Who are you going to meet?*</label>
+    <input type="text" class="form-control" id="who" name="who"/>
+    <label for="place">Where does the meeting take place?*</label>
+    <input type="text" class="form-control" id="place" name="place">
+    <label for="meeting_link">Any meeting link? (online)*</label>
+    <input type="text" class="form-control" id="meeting_link" name="meeting_link">
     <br>
-    <button type="submit" class="btn btn-info">Add note</button>
+    <button type="submit" class="btn btn-info">Add meeting</button>
 </form>
 {% endblock %}

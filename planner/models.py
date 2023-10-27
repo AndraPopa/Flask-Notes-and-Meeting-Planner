@@ -9,7 +9,7 @@ class Meeting(db.Model):
     summary = db.Column(db.String(50))
     info = db.Column(db.String(1000))
     when = db.Column(db.DateTime(timezone=True))
-    with_whom = db.Column(db.String(50))
+    who = db.Column(db.String(50), nullable=True)
     place = db.Column(db.String(50), nullable=True)
     meeting_link = db.Column(db.String(1000), nullable=True)
     date_created = db.Column(db.DateTime(timezone=True), default=func.now())
