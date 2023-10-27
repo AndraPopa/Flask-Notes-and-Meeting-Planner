@@ -1,6 +1,7 @@
+import datetime
 from flask import Blueprint, render_template, request, flash, jsonify
 from flask_login import current_user, login_required
-from .models import Note
+from .models import Note, Meeting
 from . import db
 import json
 
@@ -42,4 +43,32 @@ def delete_note():
 @views.route('/meetings', methods=['GET', 'POST'])
 @login_required
 def meetings():
+    if request.method == 'POST':
+        summary = request.form.get('summary')
+        info = request.form.get('info')
+        when = request.form.get('when')
+        who = request.form.get('who')
+        place = request.form.get('place')
+        meeting_link = request.form.get('meeting_link')
+
+        date_time_obj = datetime.datetime.strptime(when, "%Y-%m-%dT%H:%M")
+
+        if len(info) < 3:
+            flash('Meeting info is too short!', category='error')
+        elif datetime.datetime.now() > date_time_obj:
+            flash('Please add a meeting time in the future!', category='error')
+        else:
+            new_meeting = Meeting(
+                summary=summary,
+                info=info,
+                when=date_time_obj,
+                who=who,
+                place=place,
+                meeting_link=meeting_link,
+                user_id=current_user.id
+            )
+            db.session.add(new_meeting)
+            db.session.commit()
+
+            flash('Meeting added!', category='success')
     return render_template('meetings.html', user=current_user)

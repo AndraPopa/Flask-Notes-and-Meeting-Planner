@@ -2,23 +2,27 @@
 <title>{% block title %}Meetings{% endblock %}</title>
 
 {% block content %}
+
 <h1 align="center">Meetings</h1>
+
 <ul class="list-group list-group-flush" id="notes">
     {% for meeting in user.meetings %}
-    <li class="list-group-item"><b>{{ note.summary }}</b>
+    <li class="list-group-item"><b>{{ meeting.summary }}</b> : {{ meeting.when }}
     <button type="button"
             class="close"
             onClick="deleteMeeting({{ meeting.id }})">
         <span aria-hidden="true">&times;</span>
     </button>
     </li>
+
     {% endfor %}
 </ul>
+<br/><br/></br>
 <form method="POST">
     <label for="summary">Short summary</label>
     <input type="text" class="form-control" id="summary" name="summary"/>
-    <label for="data">Enter meeting info</label>
-    <textarea name="data" id="data" class="form-control"></textarea>
+    <label for="info">Enter meeting info</label>
+    <textarea name="info" id="info" class="form-control"></textarea>
     <label for="when">When will the meeting occur?</label>
     <input type="datetime-local" class="form-control" id="when" name="when"/>
     <label for="who">Who are you going to meet?*</label>
@@ -30,4 +34,12 @@
     <br>
     <button type="submit" class="btn btn-info">Add meeting</button>
 </form>
+<br><br><br>
+
+
+<button type="button" class="btn btn-light" style="background-color: #F5A9C7;">
+    <a href="/">Click here to manage your notes</a>
+</button>
+
+
 {% endblock %}
