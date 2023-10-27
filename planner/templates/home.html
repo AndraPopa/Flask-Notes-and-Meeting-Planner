@@ -3,4 +3,22 @@
 {% block title %}Planner{% endblock %}
 {% block content %}
 <h1>Welcome to the planner :)</h1>
+<h2 align="center">Notes</h2>
+<ul class="list-group list-group-flush" id="notes">
+    {% for note in user.notes %}
+    <li class="list-group-item">{{ note.summary }} - {{ note.data }}
+        <button type="button" class="close" onClick="deleteNote({{ note.id }})">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </li>
+    {% endfor %}
+</ul>
+<form method="POST">
+    <label for="summary">Short summary</label>
+    <input type="text" class="form-control" id="summary" name="summary"/>
+    <label for="data">Enter note details</label>
+    <textarea name="data" id="data" class="form-control"></textarea>
+    <br>
+    <button type="submit" class="btn btn-info">Add note</button>
+</form>
 {% endblock %}
