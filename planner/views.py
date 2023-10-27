@@ -29,9 +29,9 @@ def index():
 
 @views.route('/delete-note', methods=['POST'])
 def delete_note():
-    data = json.loads(request.data)
-    noteId = data['noteId']
-    note = Note.query.get(noteId)
+    note = json.loads(request.data)
+    note_id = note['noteId']
+    note = Note.query.get(note_id)
     if note:
         if note.user_id == current_user.id:
             db.session.delete(note)
