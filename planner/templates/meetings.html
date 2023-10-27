@@ -1,34 +1,25 @@
 {% extends "base.html" %}
-<title>{% block title %}Home{% endblock %}</title>
+<title>{% block title %}Meetings{% endblock %}</title>
 
 {% block content %}
-<h1 align="center">Notes</h1>
-
+<h1 align="center">Meetings</h1>
 <ul class="list-group list-group-flush" id="notes">
-    {% for note in user.notes %}
-    <li class="list-group-item"><b>{{ note.summary }}</b> : {{ note.data }}
+    {% for meeting in user.meetings %}
+    <li class="list-group-item"><b>{{ note.summary }}</b>
     <button type="button"
             class="close"
-            onClick="deleteNote({{ note.id }})">
+            onClick="deleteMeeting({{ meeting.id }})">
         <span aria-hidden="true">&times;</span>
     </button>
     </li>
-    <br/><br/>
     {% endfor %}
 </ul>
-
 <form method="POST">
     <label for="summary">Short summary</label>
     <input type="text" class="form-control" id="summary" name="summary"/>
-    <label for="data">Enter note details</label>
+    <label for="data">Enter meeting info</label>
     <textarea name="data" id="data" class="form-control"></textarea>
     <br>
     <button type="submit" class="btn btn-info">Add note</button>
 </form>
-<br><br><br>
-
-
-<button type="button" class="btn btn-light" style="background-color: #F5A9C7;">
-    <a href="/meetings">Click here to manage your meetings</a>
-</button>
 {% endblock %}
