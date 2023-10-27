@@ -72,3 +72,15 @@ def meetings():
 
             flash('Meeting added!', category='success')
     return render_template('meetings.html', user=current_user)
+
+
+@views.route('/delete-meeting', methods=['POST'])
+def delete_meeting():
+    meeting = json.loads(request.data)
+    meeting_id = meeting['meetingId']
+    meeting = Meeting.query.get(meeting_id)
+    if meeting:
+        if meeting.user_id == current_user.id:
+            db.session.delete(meeting)
+            db.session.commit()
+    return jsonify({})
