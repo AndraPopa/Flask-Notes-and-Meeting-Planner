@@ -1,7 +1,8 @@
 from os import path
+
 from flask import Flask
-from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
+from flask_sqlalchemy import SQLAlchemy
 
 db = SQLAlchemy()
 DB_NAME = "planner_database.db"
@@ -14,14 +15,14 @@ def create_app():
     db.init_app(app)
 
     # register views
-    from .views import views
     from .auth import auth
+    from .views import views
 
     app.register_blueprint(views, url_prefix="/")
     app.register_blueprint(auth, url_prefix="/")
 
     # import the used models
-    from .models import User, Note, Meeting
+    from .models import Meeting, Note, User
 
     with app.app_context():
         if not path.exists(f"instance/{DB_NAME}"):
