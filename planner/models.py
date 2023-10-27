@@ -13,7 +13,7 @@ class Meeting(db.Model):
     place = db.Column(db.String(50), nullable=True)
     meeting_link = db.Column(db.String(1000), nullable=True)
     date_created = db.Column(db.DateTime(timezone=True), default=func.now())
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
 
 
 class Note(db.Model):
@@ -21,7 +21,7 @@ class Note(db.Model):
     summary = db.Column(db.String(50))
     data = db.Column(db.String(1000))
     date_created = db.Column(db.DateTime(timezone=True), default=func.now())
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
 
 
 class User(db.Model, UserMixin):
@@ -31,5 +31,5 @@ class User(db.Model, UserMixin):
     first_name = db.Column(db.String(100))
     last_name = db.Column(db.String(100))
     date_birth = db.Column(db.Date)
-    notes = db.relationship('Note')
-    meetings = db.relationship('Meeting')
+    notes = db.relationship("Note")
+    meetings = db.relationship("Meeting")

@@ -5,33 +5,29 @@ from .models import Note, Meeting
 from . import db
 import json
 
-views = Blueprint('views', __name__)
+views = Blueprint("views", __name__)
 
 
-@views.route('/', methods=['GET', 'POST'])
+@views.route("/", methods=["GET", "POST"])
 @login_required
 def index():
-    if request.method == 'POST':
-        summary = request.form.get('summary')
-        note_data = request.form.get('data')
+    if request.method == "POST":
+        summary = request.form.get("summary")
+        note_data = request.form.get("data")
         if len(note_data) < 1:
-            flash('Note is too short!', category='error')
+            flash("Note is too short!", category="error")
         else:
-            new_note = Note(
-                summary=summary,
-                data=note_data,
-                user_id=current_user.id
-            )
+            new_note = Note(summary=summary, data=note_data, user_id=current_user.id)
             db.session.add(new_note)
             db.session.commit()
-            flash('Note added!', category='success')
-    return render_template('home.html', user=current_user)
+            flash("Note added!", category="success")
+    return render_template("home.html", user=current_user)
 
 
-@views.route('/delete-note', methods=['POST'])
+@views.route("/delete-note", methods=["POST"])
 def delete_note():
     note = json.loads(request.data)
-    note_id = note['noteId']
+    note_id = note["noteId"]
     note = Note.query.get(note_id)
     if note:
         if note.user_id == current_user.id:
@@ -40,23 +36,23 @@ def delete_note():
     return jsonify({})
 
 
-@views.route('/meetings', methods=['GET', 'POST'])
+@views.route("/meetings", methods=["GET", "POST"])
 @login_required
 def meetings():
-    if request.method == 'POST':
-        summary = request.form.get('summary')
-        info = request.form.get('info')
-        when = request.form.get('when')
-        who = request.form.get('who')
-        place = request.form.get('place')
-        meeting_link = request.form.get('meeting_link')
+    if request.method == "POST":
+        summary = request.form.get("summary")
+        info = request.form.get("info")
+        when = request.form.get("when")
+        who = request.form.get("who")
+        place = request.form.get("place")
+        meeting_link = request.form.get("meeting_link")
 
         date_time_obj = datetime.datetime.strptime(when, "%Y-%m-%dT%H:%M")
 
         if len(info) < 3:
-            flash('Meeting info is too short!', category='error')
+            flash("Meeting info is too short!", category="error")
         elif datetime.datetime.now() > date_time_obj:
-            flash('Please add a meeting time in the future!', category='error')
+            flash("Please add a meeting time in the future!", category="error")
         else:
             new_meeting = Meeting(
                 summary=summary,
@@ -65,19 +61,19 @@ def meetings():
                 who=who,
                 place=place,
                 meeting_link=meeting_link,
-                user_id=current_user.id
+                user_id=current_user.id,
             )
             db.session.add(new_meeting)
             db.session.commit()
 
-            flash('Meeting added!', category='success')
-    return render_template('meetings.html', user=current_user)
+            flash("Meeting added!", category="success")
+    return render_template("meetings.html", user=current_user)
 
 
-@views.route('/delete-meeting', methods=['POST'])
+@views.route("/delete-meeting", methods=["POST"])
 def delete_meeting():
     meeting = json.loads(request.data)
-    meeting_id = meeting['meetingId']
+    meeting_id = meeting["meetingId"]
     meeting = Meeting.query.get(meeting_id)
     if meeting:
         if meeting.user_id == current_user.id:
