@@ -7,7 +7,8 @@
 
 <ul class="list-group list-group-flush" id="notes">
     {% for meeting in user.meetings %}
-    <li class="list-group-item-transparent"><b>{{ meeting.summary }}</b> : {{ meeting.when }}
+    <li class="list-group-item-transparent"><b>{{ meeting.summary }}</b> :
+        {{ meeting.when.day }} {{ meeting.when.strftime("%B")}} at {{ meeting.when.time().strftime("%H:%M") }}
     <button type="button"
             class="close"
             onClick="deleteMeeting({{ meeting.id }})">
