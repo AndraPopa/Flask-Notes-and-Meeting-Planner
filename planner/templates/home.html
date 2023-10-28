@@ -1,4 +1,7 @@
 {% extends "base.html" %}
+<head>
+        <link rel="stylesheet" type="text/css" href="style.css" />
+</head>
 <title>{% block title %}Home{% endblock %}</title>
 
 {% block content %}
@@ -6,7 +9,7 @@
 
 <ul class="list-group list-group-flush" id="notes">
     {% for note in user.notes %}
-    <li class="list-group-item"><b>{{ note.summary }}</b> : {{ note.data }}
+    <li class="list-group-item-transparent"><b>{{ note.summary }}</b> : {{ note.data }}
     <button type="button"
             class="close"
             onClick="deleteNote({{ note.id }})">
